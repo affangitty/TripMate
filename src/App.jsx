@@ -3,21 +3,26 @@ import './App.css';
 import Header from './components/Header/Header';
 import List from './components/List/List';
 import Map from './components/Map/Map';
-import { CssBaseline, Grid2 } from '@mui/material';
+import { CssBaseline, Grid } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme();
 
 const App = () => {
   return (
     <>
+     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <Grid2 container spacing={3} style={{ width: '100%' }}>
-        <Grid2 item xs={12} md={4}>
-          <List />
-        </Grid2>
-        <Grid2 item xs={12} md={8}>
+      <Grid container spacing={3} style={{ width: '100%' }}>
+        <Grid item xs={12} md={4}>
+          {/* <List /> */}
+        </Grid>
+        <Grid item xs={12} md={8}>
           <Map />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
+     </ThemeProvider>
     </>
   );
 };
