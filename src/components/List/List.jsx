@@ -4,12 +4,17 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './list_styles.js';
 
-const List = ({ places, type, setType, rating, setRating, childClicked, isLoading }) => {
+const List = ({ places = [], type, setType, rating, setRating, childClicked, isLoading }) => {
   const [elRefs, setElRefs] = useState([]);
   const classes = useStyles();
 
+  // Ensure elRefs are updated whenever `places` changes
   useEffect(() => {
-    setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    setElRefs((refs) =>
+      Array(places.length)
+        .fill()
+        .map((_, i) => refs[i] || createRef())
+    );
   }, [places]);
 
   return (
@@ -21,29 +26,50 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
         </div>
       ) : (
         <>
+          {/* Dropdown for Type Selection */}
           <FormControl className={classes.formControl}>
             <InputLabel id="type">Type</InputLabel>
-            <Select id="type" value={type} onChange={(e) => setType(e.target.value)}>
+            <Select
+              id="type"
+              value={type || ''}
+              onChange={(e) => setType(e.target.value)}
+            >
               <MenuItem value="restaurants">Restaurants</MenuItem>
               <MenuItem value="hotels">Hotels</MenuItem>
               <MenuItem value="attractions">Attractions</MenuItem>
             </Select>
           </FormControl>
+
+          {/* Dropdown for Rating Selection */}
           <FormControl className={classes.formControl}>
             <InputLabel id="rating">Rating</InputLabel>
-            <Select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
+            <Select
+              id="rating"
+              value={rating || ''}
+              onChange={(e) => setRating(e.target.value)}
+            >
               <MenuItem value="">All</MenuItem>
               <MenuItem value="3">Above 3.0</MenuItem>
               <MenuItem value="4">Above 4.0</MenuItem>
               <MenuItem value="4.5">Above 4.5</MenuItem>
             </Select>
           </FormControl>
+
+          {/* List of Places */}
           <Grid container spacing={3} className={classes.list}>
-            {places?.map((place, i) => (
-              <Grid ref={elRefs[i]} key={i} item xs={12}>
-                <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
-              </Grid>
-            ))}
+            {places.length > 0 ? (
+              places.map((place, i) => (
+                <Grid ref={elRefs[i]} key={i} item xs={12}>
+                  <PlaceDetails
+                    selected={Number(childClicked) === i}
+                    refProp={elRefs[i]}
+                    place={place}
+                  />
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="h6">No places found.</Typography>
+            )}
           </Grid>
         </>
       )}
