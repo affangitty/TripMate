@@ -25,8 +25,6 @@ const Map = () => {
       >
       </GoogleMapReact>
     </div>
-  // return(
-  //   <div><h1>ABC</h1></div>
   )
 }
 
