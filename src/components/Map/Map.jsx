@@ -25,7 +25,7 @@ const Map = ({setCoordinates,setBounds,coordinates,places,setChildClicked}) => {
         }}
         onChildClick={(child) => setChildClicked(child)}
       >
-        {places.length && places.map((place, i) => (
+        {places?.map((place, i) => (
           <div
             className={classes.markerContainer}
             lat={Number(place.latitude)}
@@ -36,7 +36,7 @@ const Map = ({setCoordinates,setBounds,coordinates,places,setChildClicked}) => {
               ? <LocationOnOutlined color="primary" fontSize="large" />
               : (
                 <Paper elevation={3} className={classes.paper}>
-                  <Typography className={classes.typography} variant="subtitle2" gutterBottom> {place.name}</Typography>
+                  <Typography variant="subtitle2" gutterBottom> {place.name}</Typography>
                   <img
                     className={classes.pointer}
                     src={place.photo ? place.photo.images.large.url : 'https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg'}

@@ -24,7 +24,7 @@ const App = () => {
   useEffect(()=>{
     if(bounds.sw&&bounds.ne){
       getPlacesData(bounds.sw,bounds.ne).then((data)=>{
-        // console.log(data);
+        // console.log('Places data:', data);
         setPlaces(data);
       });
     }
