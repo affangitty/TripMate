@@ -4,19 +4,17 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './list_styles.js';
 
-const List=({places,childClicked})=>{
+const List=({places,childClicked,type,setType,rating,setRating})=>{
   const classes=useStyles();
-  const [type,setType]=useState('restraunts');
-  const [rating,setRating]=useState(0);
 
   return (
     <div className={classes.container}>
       <Typography variant="h4" style={{marginBottom:"25px"}}>Restraunts, Hotels & Attractions around you</Typography>
-      <div style={{marginBottom:"50px"}}>
+      <div style={{marginBottom:"40px"}}>
         <FormControl className={classes.formControl} style={{marginRight:"10px"}}>
         <InputLabel>Type</InputLabel>
         <Select value={type} onChange={(e)=>setType(e.target.value)}>
-          <MenuItem value="restraunts">Restraunts</MenuItem>
+          <MenuItem value="restaurants">Restraunts</MenuItem>
           <MenuItem value="hotels">Hotels</MenuItem>
           <MenuItem value="attractions">Attractions</MenuItem>
         </Select>
