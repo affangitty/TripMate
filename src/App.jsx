@@ -6,6 +6,7 @@ import Map from './components/Map/Map';
 import { CssBaseline, Grid } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { getPlacesData } from './api';
+import { LoadScript } from "@react-google-maps/api";
 
 const theme = createTheme();
 
@@ -39,9 +40,10 @@ const App = () => {
   },[type,coordinates,bounds]);
   return (
     <>
+     <LoadScript googleMapsApiKey='AIzaSyBsFNjMlimJvwgVSUXR9c0jwR_6j0pxBb8' libraries={["places"]}>
      <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
+      <Header setCoordinates={setCoordinates}/>
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List 
@@ -51,7 +53,7 @@ const App = () => {
               setType={setType}
               rating={rating}
               setRating={setRating}
-          /> 
+              /> 
         </Grid>
         <Grid item xs={12} md={8}>
           <Map 
@@ -60,10 +62,11 @@ const App = () => {
              coordinates={coordinates}
              places={filteredPlaces.length?filteredPlaces:places}
              setChildClicked={setChildClicked}
-          />
+             />
         </Grid>
       </Grid>
      </ThemeProvider>
+    </LoadScript>
     </>
   );
 };

@@ -14,11 +14,11 @@ const Map = ({setCoordinates,setBounds,coordinates,places,setChildClicked}) => {
     <div className={classes.mapContainer}>
       {coordinates.lat&&coordinates.lng&&
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyBsFNjMlimJvwgVSUXR9c0jwR_6j0pxBb8' }}
+        bootstrapURLKeys={{ key: 'AIzaSyBsFNjMlimJvwgVSUXR9c0jwR_6j0pxBb8'}}
         center={coordinates}
         defaultZoom={14}
         margin={[50,50,50,50]}
-        // options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
+        options={{ disableDefaultUI: true, zoomControl: true }}
         onChange={(e)=>{
           setCoordinates({lat:e.center.lat,lng:e.center.lng});
           setBounds({ne:e.marginBounds.ne,sw:e.marginBounds.sw});
