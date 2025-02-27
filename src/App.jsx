@@ -14,10 +14,10 @@ const App = () => {
   const [places,setPlaces]=useState([]);
   const [coordinates,setCoordinates]=useState({});
   const [bounds,setBounds]=useState({});
-  const [childClicked,setChildClicked]=useState(null);
   const [type,setType]=useState('restaurants');
   const [rating,setRating]=useState(0);
   const [filteredPlaces,setFilteredPlaces]=useState([]);
+  const [isLoading,setIsLoading]=useState(false);
 
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition(({coords:{latitude,longitude}})=>{
@@ -32,15 +32,17 @@ const App = () => {
 
   useEffect(()=>{
     if(bounds.sw&&bounds.ne){
+      setIsLoading(true);
       getPlacesData(type,bounds.sw,bounds.ne).then((data)=>{
+        setPlaces(data?.filter((place)=>place.name&&place.num_reviews>0));
         setFilteredPlaces([]);
-        setPlaces(data);
+        setIsLoading(false);
       });
     }
-  },[type,coordinates,bounds]);
+  },[type,bounds]);
   return (
     <>
-     <LoadScript googleMapsApiKey='AIzaSyBsFNjMlimJvwgVSUXR9c0jwR_6j0pxBb8' libraries={["places"]}>
+     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={["places"]}>
      <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header setCoordinates={setCoordinates}/>
@@ -48,11 +50,11 @@ const App = () => {
         <Grid item xs={12} md={4}>
           <List 
               places={filteredPlaces.length?filteredPlaces:places}
-              childClicked={childClicked}
               type={type}
               setType={setType}
               rating={rating}
               setRating={setRating}
+              isLoading={isLoading}
               /> 
         </Grid>
         <Grid item xs={12} md={8}>
@@ -61,7 +63,6 @@ const App = () => {
              setBounds={setBounds}
              coordinates={coordinates}
              places={filteredPlaces.length?filteredPlaces:places}
-             setChildClicked={setChildClicked}
              />
         </Grid>
       </Grid>

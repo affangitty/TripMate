@@ -7,7 +7,6 @@ import useStyles from "./pd_styles";
 
 const PlaceDetails = ({ place }) => {
   const classes = useStyles();
-
   return (
     <Card elevation={6}>
       <CardMedia
